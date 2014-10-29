@@ -62,14 +62,14 @@ describe("Clase PlayerMissile", function(){
 
 
 		misil2 = new PlayerMissile(2,10);
-	      	misil2.board = {remove : function(){}};
+	    misil2.board = {remove : function(){}};
 		var board = misil2.board;
 	      	
-	      	spyOn(board, "remove");
+	    spyOn(board, "remove");
 	      	
-	      	misil2.step(0.25);
+	    misil2.step(0.25);
 	      	
-	      	expect(board.remove).toHaveBeenCalled();
+	    expect(board.remove).toHaveBeenCalled();
 	});	
 		
 
