@@ -4,7 +4,8 @@ var sprites = {
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_bee: { sx: 79, sy: 0, w: 37, h: 43, frames: 1 },
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
-    enemy_circle: { sx: 158, sy: 0, w: 32, h: 33, frames: 1 }
+    enemy_circle: { sx: 158, sy: 0, w: 32, h: 33, frames: 1 },
+	fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
 };
 
 
@@ -12,7 +13,7 @@ var enemies = {
     // B, C y E substituirán a los valores por defecto definidos en la
     // variable baseParameters del constructor Enemy(). Ver
     // comentarios en el código del constructor al final del fichero.
-	basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2 , E: 100}
+	basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2 , E: 100},
 };
 
 
@@ -143,6 +144,10 @@ var PlayerShip = function() {
 	    this.x = Game.width - this.w 
 	}
 
+	if(Game.keys['b']) {
+		this.board.add(new FireBall(this.x,this.y+this.h/2));
+	}
+
 	this.reload-=dt;
 	
 	// Si no esta pulsado el espacio entonces si puede disparar.
@@ -187,6 +192,26 @@ PlayerMissile.prototype.step = function(dt)  {
 
 PlayerMissile.prototype.draw = function(ctx)  {
     SpriteSheet.draw(ctx,'missile',this.x,this.y);
+};
+
+
+// Constructor de FireBalls.
+var FireBall = function(x,y){
+	this.w = SpriteSheet.map['fireball'].w;
+	this.h = SpriteSheet.map['fireball'].h;
+	this.x = x;
+	this.y = y;
+	this.vy = -100;
+
+};
+
+FireBall.prototype.step = function(dt)  {
+    this.y += this.vy * dt;
+    if(this.y < -this.h) { this.board.remove(this); }
+};
+
+FireBall.prototype.draw = function(ctx)  {
+    SpriteSheet.draw(ctx,'fireball',this.x,this.y);
 };
 
 
