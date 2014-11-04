@@ -86,7 +86,7 @@ describe("Clase Enemy", function(){
 
 	
 	it("step()", function(){
-		var enemy = new Enemy(enemies.basic));
+		var enemy = new Enemy(enemies.basic);
 		var dt  = 0.5;
 		enemy.step(dt);
 		var x = enemy.vx * dt + 100;
@@ -95,7 +95,9 @@ describe("Clase Enemy", function(){
 		expect(x).toEqual(enemy.x);
 		expect(y).toEqual(enemy.y);
 
-		var enemy2 = new Enemy(enemies.basic));
+		var enemy2 = new Enemy(enemies.basic);
+		enemy2.x = -100;
+		enemy2.y = 500;
 		enemy2.board = {remove: function () {}}
 		spyOn(enemy2.board, "remove");
 		enemy2.step(dt);
@@ -105,7 +107,8 @@ describe("Clase Enemy", function(){
 
 	it("draw()", function(){
 		spyOn(SpriteSheet, "draw");
-		var enemy = new Enemy(enemies.basic));
+		var enemy = new Enemy(enemies.basic);
+		enemy.draw();
 		expect(SpriteSheet.draw).toHaveBeenCalled();
 		expect(SpriteSheet.draw.calls[0].args[1]).toEqual("enemy_purple");
  		expect(SpriteSheet.draw.calls[0].args[2]).toEqual(enemy.x);
