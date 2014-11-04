@@ -144,11 +144,18 @@ var PlayerShip = function() {
 	    this.x = Game.width - this.w 
 	}
 
-	if(Game.keys['b']) {
-		this.board.add(new FireBall(this.x,this.y+this.h/2));
+	this.reload-=dt;
+
+	if(Game.keys['b'] && this.reload < 0) {
+		this.reload = this.reloadTime;
+		this.board.add(new FireBall(this.x-30,this.y+this.h/2));
 	}
 
-	this.reload-=dt;
+	if(Game.keys['n'] && this.reload < 0) {
+		this.reload = this.reloadTime;
+		this.board.add(new FireBall(this.x+30,this.y+this.h/2));
+	}
+
 	
 	// Si no esta pulsado el espacio entonces si puede disparar.
 	if(!Game.keys['fire'])

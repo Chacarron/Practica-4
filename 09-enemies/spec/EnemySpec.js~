@@ -61,3 +61,60 @@
 
 */
 
+describe("Clase Enemy", function(){
+	var canvas, ctx;
+
+        beforeEach(function(){
+	    oldGame = Game;
+	    loadFixtures('index.html');
+
+	    canvas = $('#game')[0];
+	    expect(canvas).toExist();
+
+	    ctx = canvas.getContext('2d');
+	    expect(ctx).toBeDefined();
+
+	    oldGame = Game;
+	    SpriteSheet.load (sprites,function(){});
+	
+    	});
+
+    	afterEach(function(){
+        	Game = oldGame;
+    	});
+	
+
+	
+	it("step()", function(){
+		var enemy = new Enemy(enemies.basic));
+		var dt  = 0.5;
+		enemy.step(dt);
+		var x = enemy.vx * dt + 100;
+    	var y = enemy.vy * dt - 50;
+
+		expect(x).toEqual(enemy.x);
+		expect(y).toEqual(enemy.y);
+
+		var enemy2 = new Enemy(enemies.basic));
+		enemy2.board = {remove: function () {}}
+		spyOn(enemy2.board, "remove");
+		enemy2.step(dt);
+		expect(enemy2.board.remove).toHaveBeenCalled();
+		
+    });
+
+	it("draw()", function(){
+		spyOn(SpriteSheet, "draw");
+		var enemy = new Enemy(enemies.basic));
+		expect(SpriteSheet.draw).toHaveBeenCalled();
+		expect(SpriteSheet.draw.calls[0].args[1]).toEqual("enemy_purple");
+ 		expect(SpriteSheet.draw.calls[0].args[2]).toEqual(enemy.x);
+ 		expect(SpriteSheet.draw.calls[0].args[3]).toEqual(enemy.y);
+    });
+
+});
+
+
+   
+
+
