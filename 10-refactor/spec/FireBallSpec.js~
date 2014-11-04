@@ -49,6 +49,7 @@ describe("Clase FireBall", function(){
 		expect(SpriteSheet.draw.calls[0].args[1]).toEqual("fireball");
  		expect(SpriteSheet.draw.calls[0].args[2]).toEqual(fireball.x);
  		expect(SpriteSheet.draw.calls[0].args[3]).toEqual(fireball.y);
+		expect(SpriteSheet.draw.calls[0].args[4]).toEqual(fireball.side);
     });
 
 });
