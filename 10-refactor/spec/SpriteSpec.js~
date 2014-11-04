@@ -34,7 +34,7 @@ describe("Clase Sprite", function(){
 		
        	var x = new Enemy(enemies.basic);
 		spyOn(x, "merge");
-        x.setup(x.sprite)
+        x.setup(x.sprite);
        	expect(x.merge).toHaveBeenCalled();
 
     });
