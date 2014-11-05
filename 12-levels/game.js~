@@ -14,7 +14,7 @@ var enemies = {
     // straight sólo tiene el parámetro E para la velocidad vertical,
     // por lo que se mueve hacia abajo a velocidad constante.
     straight: { x: 0,   y: -50, sprite: 'enemy_ship', health: 10, 
-		B: -50, C: 1, E: 100 },
+		B: 50, C: 1, E: 100 },
 
     //  ltr (left to right) tiene velocidad constante vertical pero
     //  tiene parámetros B y C que le dotan de una velocidad
@@ -53,6 +53,14 @@ var startGame = function() {
                                     playGame));
 };
 
+var midGame = function() {
+    Game.setBoard(0,new Starfield(20,0.4,100,true));
+    Game.setBoard(1,new Starfield(50,0.6,100));
+    Game.setBoard(2,new Starfield(100,1.0,50));
+    Game.setBoard(3,new TitleScreen("Level 2", 
+                                    "Press fire to start Level 2",
+                                    playGame2));
+};
 
 
 // Definición del nivel level1.  
@@ -79,6 +87,23 @@ var level1 = [
     [ 22000,    25000, 400,         'wiggle',   { x: 100 } ]
 ];
 
+var level2 = [
+  //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+    [ 0,        4000,  50,         'step'                 ],
+	[ 1000,     13000, 10,         'ltr'                  ],
+    [ 2000,     13000, 800,         'ltr'                  ],
+	[ 3000,     13000, 80,         'ltr'                  ],
+    [ 6000,     16000, 400,         'circle'               ],
+    [ 10000,    16000, 40,         'circle'               ],
+    [ 17800,    20000, 500,         'straight', { x: 50  } ],
+    [ 7200,    	20000, 500,         'straight', { x: 90  } ],
+    [ 8200,    	20000, 500,         'straight', { x: 10  } ],
+    [ 15200,    20000, 50,         'straight', { x: 90  } ],
+    [ 18200,    20000, 500,         'straight', { x: 10  } ],
+    [ 22000,    25000, 4,         'wiggle',   { x: 150 } ],
+    [ 22000,    25000, 4,         'wiggle',   { x: 100 } ]
+];
+
 
 
 var playGame = function() {
@@ -88,7 +113,18 @@ var playGame = function() {
     // Se un nuevo nivel al tablero de juego, pasando la definición de
     // nivel level1 y la función callback a la que llamar si se ha
     // ganado el juego
-    board.add(new Level(level1, winGame));
+    board.add(new Level(level1, midGame));
+    Game.setBoard(3,board);
+};
+
+var playGame2 = function() {
+    var board = new GameBoard();
+    board.add(new PlayerShip());
+
+    // Se un nuevo nivel al tablero de juego, pasando la definición de
+    // nivel level1 y la función callback a la que llamar si se ha
+    // ganado el juego
+    board.add(new Level(level2, winGame));
     Game.setBoard(3,board);
 };
 
