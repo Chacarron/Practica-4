@@ -91,7 +91,7 @@ describe("Clase Enemy", function(){
 		var dt  = 0.5;
 		enemy.step(dt);
 		var x = enemy.vx * dt + 100;
-    		var y = enemy.vy * dt - 50;
+    	var y = enemy.vy * dt - 50;
 
 		expect(x).toEqual(enemy.x);
 		expect(y).toEqual(enemy.y);

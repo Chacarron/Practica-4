@@ -120,6 +120,21 @@ describe("Clase Level", function() {
         
          });
 
+	it("Llamada a callback cuando ya no hay enemigos", function() {
+		var test1 = [
+	    [ 0,        4000,  500,         'step'                 ],
+	    [ 6000,     13000, 800,         'ltr'                  ]
+	];
+	
+		var board = new GameBoard();
+		var callback = function(){};
+		var level = new Level(test1, callback);
+		board.add(level);
+		spyOn(SpriteSheet, "draw");
+
+		level.step(2.0);
+		expect(SpriteSheet.draw).toHaveBeenCalled();
+         });
 });
 
 
