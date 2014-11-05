@@ -14,25 +14,25 @@ var enemies = {
     // straight sólo tiene el parámetro E para la velocidad vertical,
     // por lo que se mueve hacia abajo a velocidad constante.
     straight: { x: 0,   y: -50, sprite: 'enemy_ship', health: 10, 
-		E: 100 },
+		B: 50, C: 1, E: 100 },
 
     //  ltr (left to right) tiene velocidad constante vertical pero
     //  tiene parámetros B y C que le dotan de una velocidad
     //  horizontal sinusoidal suave.
-    ltr:      { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, 
-		B: 75, C: 1, E: 100  },
+    ltr:      { x: 25,   y: -100, sprite: 'enemy_purple', health: 10, 
+		B: 75, C: 10, E: 180  },
 
     // circle tiene velocidad sinusoidal vx e vy, que junto al
     // parámetro H de desplazamiento en el tiempo le dotan de un
     // movimiento circular.
     circle:   { x: 250,   y: -50, sprite: 'enemy_circle', health: 10, 
-		A: 0,  B: -100, C: 1, E: 20, F: 100, G: 1, H: Math.PI/2 },
+		A: 0,  B: -100, C: 1, E: 50, F: 10, G: 1, H: Math.PI/2 },
 
     //  wiggle y step tienen los mismos parámetros pero con diferentes
     //  magnitudes que les hacen serpentear de manera diferente según
     //  van bajando.
     wiggle:   { x: 100, y: -50, sprite: 'enemy_bee', health: 20, 
-		B: 50, C: 4, E: 100 },
+		B: 5, C: 100, E: 400 },
     step:     { x: 0,   y: -50, sprite: 'enemy_circle', health: 10,
 		B: 150, C: 1.2, E: 75 }
 };
@@ -242,7 +242,8 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
     if(this.board.remove(this)) {
-	loseGame();
+		this.board.add(new Explosion(this.x + this.w/2,this.y + this.h/2));
+		setTimeout(function(){loseGame()},500);
     }
 };
 
